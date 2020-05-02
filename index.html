@@ -52,7 +52,7 @@
                             <span class="input-group-text" id="inputGroup-sizing-lg">Start Year (Optional)</span>
                         </div>
                         <input type="text" class="form-control" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-lg">
+                            aria-describedby="inputGroup-sizing-lg" id="search-text">
                     </div>
                 </div>
                 <!-- text3 -->
@@ -88,7 +88,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
             <script>
                 var apiKey = "3EBvbrb4GzaURgbcTvTMOWG1gVoSfw26"
-                var keyword = "Obama"
+                var keyword = "Apple"
                 var yearBegin = 20140101
                 var yearEnd = 20150101
                 var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + keyword + "&begin_date=" + yearBegin + "&end_date=" + yearEnd + "&api-key=" + apiKey;
@@ -96,11 +96,23 @@
                     url: queryURL,
                     method: "GET"
                 }).then(function (response) {
-                    console.log(response.response.docs[0].headline.main)
-                    console.log(response)
+
+                    var results = response.response.docs
+
+                    function searchTerm(line) {
+                        $("#search-button").click(function () {
+                            var keySearch = $("#search-text").val();
+                            keyword.val(keySearch)
+                        });
+                    }
+                    for (var i = 0; i < results.length; i++) {
+                        console.log(results[i].headline.main)
+                        var heading = $("<h1>").html(results[i].headline.main);
+                        $("#display-div").append(heading);
+
+                    }
                 });
             </script>
-
 
 </body>
 
